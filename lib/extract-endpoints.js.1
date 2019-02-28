@@ -1,0 +1,39 @@
+'use strict';
+
+const definitionHelper = require('./definition-helper');
+
+function extractEndpoints(doc, endpoints) {
+  const limitPaths = {};
+  const limitDefinitions = {};
+
+  endpoints.forEach((val, index, array) => {
+    const chars = val.split(" ");
+    const verbeHTTP = chars[0];
+    const endpoint = chars[1];
+    console.log(`extracting path ${endpoint} for method ${verbeHTTP} ...`);
+    var contenu = {};
+    var contenuEndpoint = {};
+    var swagger = doc.paths;
+    if (typeof swagger === "undefined") {
+
+    }
+    else {
+        var contenuEndpoint = doc.paths[endpoint];
+        if (contenuEndpoint) {
+            contenu[verbeHTTP] = contenuEndpoint[verbeHTTP];
+            limitPaths[endpoint] = contenu;
+            console.log(`extracting definitions for ${endpoint} ...`);
+            const requiredPaths = definitionHelper.findDefinitions(doc, endpoint, verbeHTTP);
+            requiredPaths.forEach(v => {
+                console.log(`adding definition ${v} ...`);
+                limitDefinitions[v] = doc.definitions[v];
+            });
+        }
+    }
+  });
+//    limitPaths.forEach((val) => {console.log(val)});
+  return { limitPaths, limitDefinitions };
+}
+
+
+module.exports = extractEndpoints;
