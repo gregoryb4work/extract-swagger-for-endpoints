@@ -9,9 +9,16 @@ npm install -g bootprint-openapi
 
 npm install fs-extra
 
-extract-swagger-for-endpoints --src sourcefile.yml --dest output.yml '/pet/findByStatus' '/pet'
+npm install download-git-repo
 
-extract-swagger-for-endpoints --src sourcefile.yml --list-paths
+extract-swagger-for-endpoints --dest target  "/elec-activation-tasks delete put" "/sites/{site-id}/elec-tariff-callback-requests put"
+
+-h generate html
+--src directory of repo git archi with subdirectory systems
+-g downaload gt archi (necessary to be already authentificated) and write in tmp directory
+if --g is not precised, you need to have repo git archi downloded in tmp directory
+
+
 ```
 
 TODO:

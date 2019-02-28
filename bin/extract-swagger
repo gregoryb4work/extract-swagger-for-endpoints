@@ -18,18 +18,18 @@ program
   .option('-s, --src <sourcefile>', 'Source swagger/openapi spec')
   .option('-d, --dest <destDirectory>', 'Generated swagger/openapi spec')
   .option('-h, --html')
-    .option('-g, --downnloadgitarchi')
+    .option('-g, --downnloadgitarchi <url>')
   .parse(process.argv);
 
 const destDirectory =  program.dest;
-var repoArchiSourcesDirectory = "tmp";
+var repoArchiSourcesDirectory = "tmp2";
 //add control to not overwrite sourcefile
 if (program.src) {
     repoArchiSourcesDirectory= program.src;
 }
 
 if (program.downnloadgitarchi) {
-    const gitlab = 'direct:http://gitlab.edelia.net/architecture/architecture.git';
+    const gitlab = program.downnloadgitarchi;
     try {
         download(gitlab , repoArchiSourcesDirectory, {clone: true});
     }
@@ -40,31 +40,39 @@ if (program.downnloadgitarchi) {
     // pull if directory exist already
 }
 //we want directory output existed
-fs.mkdirs(destDirectory, function (err) {
-    if (err) return console.error(err);
-    console.log(`success create directory ${destDirectory}`)
-});
+try {
+    fs.removeSync(destDirectory);
+    //console.log(`success remove directory ${destDirectory}`);
+}
+catch(err){
+     console.log(`Error deleting directory ${destDirectory}`);
+}
+
+try{
+    fs.mkdirsSync(destDirectory);
+    //console.log(`success create directory ${destDirectory}`);
+}
+catch(err)
+{
+    console.error(err);
+}
 
 var files = searchRecursive(repoArchiSourcesDirectory+"\\"+"systems", '.yaml'); // replace dir and pattern
 files.forEach(file => {
     file = file.replace(/\\/g, '\\\\');
-   // console.log(file);
     let sourceDoc;
     try {
         sourceDoc = yaml.safeLoad(fs.readFileSync(file, 'utf8'));
-        //sourceDoc = yaml.safeLoad(fs.readFileSync("C:\\Mes Documents\\Outils\\node-v10.15.1-win-x64\\node_modules\\extract-swagger-for-endpoints\\bc-elec-api.yaml", 'utf8'));
-        //sourceDoc = yaml.safeLoad(fs.readFileSync("C:\\Mes Documents\\Outils\\node-v10.15.1-win-x64\\node_modules\\extract-swagger-for-endpoints\\accreditation-adobe-compaign-extraction-batch.yaml", 'utf8'));
-        //sourceDoc = yaml.safeLoad(fs.readFileSync("C:\\Mes Documents\\Outils\\node-v10.15.1-win-x64\\node_modules\\extract-swagger-for-endpoints\\tmp\\systems\\accreditation-sys\\accreditation-adobe-compaign-extraction-batch\\accreditation-adobe-compaign-extraction-batch.yaml", 'utf8'));
     } catch (e) {
         console.log(`erreur de lecture du fichier ${e}`);
-        process.exit();
+        return;
     }
     const destDoc = extractSwagger(sourceDoc, program.args);
-    console.log(destDoc);
-    if (destDoc) {
+    if (Object.keys(destDoc.paths).length>0)
+    {
         const destRelativeFile = file.substring(file.lastIndexOf("\\"), file.length);
         const destFile = destDirectory + '\\' + destRelativeFile;
-//        console.log(`File destination would be : ${destFile}`);
+        console.log(`File destination would be : ${destFile}`);
         try {
             fs.writeFileSync(destFile, yaml.safeDump(destDoc, {skipInvalid: true}));
         } catch (e) {
@@ -73,7 +81,6 @@ files.forEach(file => {
         }
     }
 });
-
 
 if (program.downnloadgitarchi) {
 //delete sources of repo archi
