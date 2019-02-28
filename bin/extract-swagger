@@ -22,7 +22,7 @@ program
   .parse(process.argv);
 
 const destDirectory =  program.dest;
-var repoArchiSourcesDirectory = "tmp2";
+var repoArchiSourcesDirectory = "tmp";
 //add control to not overwrite sourcefile
 if (program.src) {
     repoArchiSourcesDirectory= program.src;
@@ -64,7 +64,7 @@ files.forEach(file => {
     try {
         sourceDoc = yaml.safeLoad(fs.readFileSync(file, 'utf8'));
     } catch (e) {
-        console.log(`erreur de lecture du fichier ${e}`);
+        console.log(`erreur de lecture du fichier ${file} ${e}`);
         return;
     }
     const destDoc = extractSwagger(sourceDoc, program.args);

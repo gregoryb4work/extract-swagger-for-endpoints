@@ -2,6 +2,11 @@ Extract swagger/openapi spec with only required endpoint(s).
 
 ```
 npm i -g extract-swagger-for-endpoints
+//encore necessaire ?
+
+npm install commander
+
+npm install js-yaml
 
 npm install -g bootprint
 
@@ -11,7 +16,7 @@ npm install fs-extra
 
 npm install download-git-repo
 
-extract-swagger-for-endpoints --dest target  "/elec-activation-tasks delete put" "/sites/{site-id}/elec-tariff-callback-requests put"
+extract-swagger-for-endpoints --dest target  "/elec-activation-tasks delete put" "/sites/{site-id}/elec-tariff-callback-requests put"  "/sites/{site-id}/news-stream get"
 
 -h generate html
 --src directory of repo git archi with subdirectory systems
