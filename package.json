@@ -1,5 +1,5 @@
 {
-  "name": "extract-swagger-for-endpoints",
+  "name": "extract-swagger-from-swaggers-to-html",
   "version": "1.0.2",
   "description": "Extract swagger/openapi spec with only required endpoint(s).",
   "scripts": {
@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/saumitrab/extract-swagger-for-endpoints"
+    "url": "git+ssh://git@github.com/gregoryb4work/extract-swagger-from-swaggers-to-htmls"
   },
   "keywords": ["swagger", "openapi", "endpoints"]
 }
