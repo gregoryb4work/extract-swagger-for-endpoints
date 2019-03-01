@@ -1,8 +1,9 @@
 Extract swagger/openapi spec with only required endpoint(s).
 
 ```
-npm i -g extract-swagger-for-endpoints
-//encore necessaire ?
+download node js
+
+npm i -g extract-swagger-from-swaggers-to-html
 
 npm install commander
 
@@ -16,12 +17,15 @@ npm install fs-extra
 
 npm install download-git-repo
 
-extract-swagger-for-endpoints --dest target  "/elec-activation-tasks delete put" "/sites/{site-id}/elec-tariff-callback-requests put"  "/sites/{site-id}/news-stream get"
+download "repo archi" in "tmp" directory
 
--h generate html
---src directory of repo git archi with subdirectory systems
--g downaload gt archi (necessary to be already authentificated) and write in tmp directory
-if --g is not precised, you need to have repo git archi downloded in tmp directory
+extract-swagger-from-swaggers-to-html --dest target  "/elec-activation-tasks delete put" "/sites/{site-id}/elec-tariff-callback-requests put"  "/sites/{site-id}/news-stream get"
+
+for information
+* -h generate html
+* --src directory of repo git archi with subdirectory systems
+* -g downaload gt archi (necessary to be already authentificated) and write in tmp directory
+* if --g is not precised, you need to have repo git archi downloded in tmp directory
 
 
 ```
