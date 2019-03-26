@@ -57,6 +57,17 @@ catch(err)
     console.error(err);
 }
 
+//prepare variable to check if all endoins was found
+var allFound= [];
+program.args.forEach((val, index, array) => {
+    var chars = val.split(" ");
+    const endpoint = chars[0];
+    chars.shift();
+    chars.forEach(verbeHTTP => {
+        allFound[verbeHTTP+" "+endpoint] = 0;
+    });
+})
+
 var files = searchRecursive(repoArchiSourcesDirectory+"\\"+"systems", '.yaml'); // replace dir and pattern
 files.forEach(file => {
     file = file.replace(/\\/g, '\\\\');
@@ -67,7 +78,7 @@ files.forEach(file => {
         console.log(`erreur de lecture du fichier ${file} ${e}`);
         return;
     }
-    const destDoc = extractSwagger(sourceDoc, program.args);
+    const destDoc = extractSwagger(sourceDoc, program.args,allFound);
     if (Object.keys(destDoc.paths).length>0)
     {
         const destRelativeFile = file.substring(file.lastIndexOf("\\"), file.length);
@@ -92,3 +103,7 @@ if (program.downnloadgitarchi) {
 if (program.html) {
     swaggerToHTML.build(destFile, destDirectory).generate().done(console.log)
 }
+
+console.log(allFound);
+//check if all endoins was found
+//TODO console.error if endpoint not found

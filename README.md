@@ -21,6 +21,9 @@ download "repo archi" in "tmp" directory
 
 extract-swagger-from-swaggers-to-html --dest target  "/elec-activation-tasks delete put" "/sites/{site-id}/elec-tariff-callback-requests put"  "/sites/{site-id}/news-stream get"
 
+Below works too and give same results!
+extract-swagger-from-swaggers-to-html --dest target  "/elec-activation-tasks delete" "/elec-activation-tasks put" "/sites/{site-id}/elec-tariff-callback-requests put"  "/sites/{site-id}/news-stream get"
+
 for information
 * -h generate html
 * --src directory of repo git archi with subdirectory systems
