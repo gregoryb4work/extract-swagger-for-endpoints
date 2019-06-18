@@ -1,33 +1,38 @@
 Extract swagger/openapi spec with only required endpoint(s).
 
 ```
-download node js
+For Windows noob user :/
 
-npm i -g extract-swagger-from-swaggers-to-html
+First, download node js on nodejs.org and install it. (By default on windows : c:\Programmes\nodejs).
 
-npm install commander
+Then, launch command line (with administrator right if needed) and execut each following command : 
+	cd c:\Programmes\nodejs
+	npm install extract-swagger-from-swaggers-to-html
+	npm install -g commander
+	npm install -g js-yaml
+	npm install -g bootprint
+	npm install -g bootprint-openapi
+	npm install -g fs-extra
+	npm install -g download-git-repo
+	
 
-npm install js-yaml
+Then,
+	#create tmp directory in c:\Programmes\nodejs\node_modules\extract-swagger-from-swaggers-to-html
+	#download "repo archi" in this "tmp" directory (FYI : you need "systems" directory in "tmp" directory")
+	#clean 	duplicate service (exemple : same part and pro and authorization sys)
 
-npm install -g bootprint
+return to your command line tool : 
+	cd node_modules\extract-swagger-from-swaggers-to-html
+	#you can execute extraction like below
+	node bin\extract-swagger --src tmp --dest target  "/someRestApi delete put" "/someOtherRestApi/{some-id}/elec-rest put"  "/toto/{titi-id}/news-stream get"
+	#Below works too and give same results!
+		node bin\extract-swagger --src ../tmp --dest target  "/someRestApi delete" "/someRestApi put" "/someOtherRestApi/{some-id}/elec-rest put"  "/toto/{titi-id}/news-stream get"
 
-npm install -g bootprint-openapi
-
-npm install fs-extra
-
-npm install download-git-repo
-
-download "repo archi" in "tmp" directory
-
-extract-swagger-from-swaggers-to-html --dest target  "/elec-activation-tasks delete put" "/sites/{site-id}/elec-tariff-callback-requests put"  "/sites/{site-id}/news-stream get"
-
-Below works too and give same results!
-extract-swagger-from-swaggers-to-html --dest target  "/elec-activation-tasks delete" "/elec-activation-tasks put" "/sites/{site-id}/elec-tariff-callback-requests put"  "/sites/{site-id}/news-stream get"
-
+		
 for information
 * -h generate html
-* --src directory of repo git archi with subdirectory systems
-* -g downaload gt archi (necessary to be already authentificated) and write in tmp directory
+* --src directory of repo git archi with subdirectory systems (default tmp)
+* not functionnal since repo need cleaning before use by this tool. -g downaload archi git repository (necessary to be already authentificated) and write in tmp directory
 * if --g is not precised, you need to have repo git archi downloded in tmp directory
 
 

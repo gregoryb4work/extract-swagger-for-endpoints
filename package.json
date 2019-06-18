@@ -1,6 +1,6 @@
 {
   "name": "extract-swagger-from-swaggers-to-html",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "Extract swagger/openapi spec with only required endpoint(s).",
   "scripts": {
     "test": "./node_modules/.bin/mocha"
